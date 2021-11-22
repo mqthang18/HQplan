@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questionaire of habitat quality model</title>
+    <style>
+        .html {
+            font-size: 62.5%;
+        }
+
+        :root {
+            --with-wrapper: 98 rem; 
+        }
+        .wrapper {
+            width: var(--with-wrapper);
+            display: flex;
+            gap: 2rem;
+        }
+        .wrapper > .left-col, .right-col {
+            width: 50%;
+        }
+        table, tr, td {
+            border: 1px solid;
+        }
+
+        .collapsible {
+            background-color: #777;
+            color: white;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+        }
+
+        .active, .collapsible:hover {
+            background-color: #555;
+        }
+
+        .content {
+            padding: 0 18px;
+            display: none;
+            overflow: hidden;
+            background-color: #f1f1f1;
+        }
+
+        @media screen and (max-width: 750px) {
+            :root {
+                --with-wrapper: 100%; 
+            }
+            .wrapper {
+                flex-direction: column;
+            }
+
+            .wrapper > .left-col, .right-col {
+            width: 100%;
+        }
+        }
+    </style>
+</head>
+<body>
+    <h1>Đánh giá chất lượng sinh cảnh</h1>
+    <div class="wrapper">
+        <div class="left-col">
+            <button type="button" class="collapsible">Bảng 1. Bảng nhân tố đe dọa sinh cảnh</button>
+            <div class="content">
+                <br>
+                <table>
+                    <tr>
+                        <td>MAX_DIST</td>
+                        <td>WEIGHT</td>
+                        <td>THREAT</td>
+                        <td>DECAY</td>
+                        <td>DESCRIP</td>
+                        <td>BASE_PATH</td>
+                        <td>CUR_PATH</td>
+                        <td>FUT_PATH</td>
+                    </tr>
+                    <tr>
+                        <td>?</td>
+                        <td>?</td>
+                        <td>A</td>
+                        <td>?</td>
+                        <td>Optional</td>
+                        <td>Optional</td>
+                        <td>?</td>
+                        <td>Optional</td>
+                    </tr>
+                </table>
+                <ol>
+                    <li>MAX_DIST: khoảng cách tối đa mà một tác nhân đe dọa có thể ảnh hưởng (có thể sử dụng công cụ stressor buffer trong QGIS (ArcGIS,...) để biểu diễn)</li>
+                    <li>WEIGHT: trọng số của tác nhân đe dọa</li>
+                    <li>DECAY: phương trình phân ra qua không gian của tác nhân đe dọa (linear or exponential)</li>
+                </ol>
+            </div>
+        </div>
+        <div class="right-col">
+            <button type="button" class="collapsible">Bảng 2. Độ nhạy của sinh cảnh đối với tác nhân đe dọa được nêu tại bảng 1</button>
+            <div class="content">
+                <br>
+                <table>
+                    <tr>
+                        <td>LULC</td>
+                        <td>NAME</td>
+                        <td>HABITAT</td>
+                        <td>A</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Mangrove</td>
+                        <td>1</td>
+                        <td>0.4</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Aquaculture</td>
+                        <td>? - Optional</td>
+                        <td>0.2</td>
+                    </tr>
+                </table>
+                <ol>
+                    <li>LULC: thể hiện id của lớp Land use land cover được giải đoán trong ảnh vệ tinh</li>
+                    <li>NAME: Tên của lớp LULC được giải đoán (lý thuyết: tùy chọn, nhưng nên đặt theo nguồn dữ liệu)</li>
+                    <li>Habitat: Cột này xác định một lớp LULC có phải hay không sinh cảnh sống. Để đơn giản, không găn với thành phần loài thì 1: là sinh cảnh, ngược lại, 0: không phải sinh cảnh. <br> 
+                    <span style="color: red;">Nếu gắn với loài thì giá trị Habitat thuộc đoạn [0;1]</span></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="data">
+        <p>Nguồn dữ liệu bản đồ sinh cảnh (Habitat map): <a href="https://www.eorc.jaxa.jp/ALOS/en/dataset/lulc_e.htm" target="_blank">Link</a></p>
+        <span style="font-size: 32px; font-weight: 900; text-decoration: underline;">Nội dung phỏng vấn</span>
+            <p>* Shapefile được tạo bằng phương thức khảo sát thực tế dựa trên sự hướng dẫn của cán bộ (người dân) địa phương</p>
+            <p>* Các dữ liệu dưới đây sẽ được thống kê lại và đưa vào mô hình toán học AHP để thực hiện phân tích đánh giá thứ bậc</p>
+            <div class="question">
+                <p><span style="font-weight: 900;">Mời anh (chị) đánh vào ô trống để cung cấp các thông tin về những nhân tố thực tế đang diễn ra tại địa phương?</span></p>
+                Và từ các tác nhân đã chọn anh (chị) hãy tạo một bản đồ (điểm, đường hoặc vùng) cung cấp phạm vi hoạt động của chúng bằng cách điền khoảng cách từ biên bản đồ đến nơi tối đa mà nhân tố có thể di chuyển tới? 
+                <!-- <br>Ngoài ra, anh (chị) có thể cung cấp thêm dư đoán về sự thay đổi của nhân tố về mặt không gian trong tương lai sắp tới? -->
+                <ul style="list-style-type:none;">
+                    <li>
+                        <input type="checkbox" name="Factors" value="Khai thác cây rừng ngập mặn (bất hợp pháp)">Khai thác cây rừng ngập mặn (bất hợp pháp)<br>
+                        <input type="checkbox" name="Factors" value="Đánh bắt thủy hải sản trong rừng ngập mặn (Cá, cua, vọp, ba khía, tôm,...)">Đánh bắt thủy hải sản trong rừng ngập mặn (Cá, cua, vọp, ba khía, tôm,...)<br>
+                        <input type="checkbox" name="Factors" value="Thay đổi về sử dụng đất rừng ngập mặn (sang ao nuôi tôm, cá hợp pháp và bất hợp pháp)">Thay đổi về sử dụng đất rừng ngập mặn (sang ao nuôi tôm, cá hợp pháp và bất hợp pháp)<br>
+                        <input type="checkbox" name="Factors" value="Phát triển cơ sở hạ tầng (giao thông, đô thị,...)">Phát triển cơ sở hạ tầng (giao thông, đô thị,...)<br>
+                        <input type="checkbox" name="Factors" value="Ô nhiễm môi trường (túi nilong, hóa chất từ ao nuôi,..)">Ô nhiễm môi trường (túi nilong, hóa chất từ ao nuôi,..)<br>
+                        <input type="checkbox" name="Factors" value="Xói lở đất">Xói lở đất (tàu bè qua lại, do sóng biển...)<br>
+                        <input type="checkbox" name="Factors" value="Biến đổi khí hậu (mực nước biển tăng, nước quá mặn,...)">Biến đổi khí hậu (mực nước biển tăng, nước quá mặn,...)<br>
+                        <input type="checkbox" name="Factors" value="Một số dịch vụ du lịch sinh thái có liên quan">Một số dịch vụ du lịch sinh thái có liên quan<br>
+                        <input type="checkbox" name="Factors" value="Loài côn trùng vi sinh gây bệnh xâm lấn">Loài côn trùng vi sinh gây bệnh xâm lấn<br>
+                    </li>
+                </ul>
+                <button onclick="GetResponse()">Submit</button>
+            </div>
+            <br>
+    
+            <div id="questionaire"></div>
+    </div>   
+    <script>
+        // Collapsible animation
+    {
+        animation()
+        function animation() {
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                    this.classList.toggle("active");
+                    var content = this.nextElementSibling;
+                    if (content.style.display === "block") {
+                    content.style.display = "none";
+                    } else {
+                    content.style.display = "block";
+                    }
+                });
+            }
+        }
+        
+    }
+        // Create question 
+    {
+        var res_arr = [];
+        
+        var LULC_list = ['LULC Aquaculture', 'LULC Mangrove'] // Identify habitat class
+        
+        const likert_scale = {
+            1: "Không biết", 
+            2: "Không đe dọa",
+            3: "Đe dọa thấp", 
+            4: "Đe dọa trung bình",
+            5: "Đe dọa rất cao"
+        };
+        const decay_equation = {
+            1: 'Theo dạng tuyến tính',
+            2: 'Theo dạng lũy thừa'
+        }
+        
+        function GetResponse() {
+            res_arr = []
+            var Factor = document.getElementsByName('Factors');
+  
+            let val = Array.from(Factor)
+            
+            for (var i = 0, length = Factor.length; i < length; i++) {
+                if (Factor[i].checked) {
+                    var a = Factor[i].value; 
+                    res_arr.push(a);
+                }
+            }
+            var question_threat = {
+                1: ['Từ các nhân tố trên, anh (chị) hãy đánh giá mức độ đóng góp của tác nhân vào sự suy thoái của sinh cảnh ngập mặn', {1: res_arr, 2: likert_scale}],
+                2: ['Anh (chị) hãy mô tả kiểu suy thoái của tác nhân theo không gian?', {1: res_arr, 2: decay_equation}]
+            };
+
+            var question_sensitivity = {
+                1: ['Anh (chị) hãy đánh giá độ nhạy của sinh cảnh ngập đối với các tác nhân', {1: res_arr, 2: likert_scale, 3: LULC_list}]
+            };
+            
+            let element = document.getElementById("questionaire");
+            while (element.firstChild) {
+                element.removeChild(element.firstChild);
+            }
+            questionaire(question_threat, 'question');
+            questionaire(question_sensitivity, 'sensitivity', 'blue');
+ 
+        }
+
+        function questionaire(data, idplus, color) {
+            var id = 1;
+            
+            for (var i = 0; i < Object.keys(data).length; i++) {
+                // console.log(data[i+1][0])
+                var title = idplus.concat((i+1).toString())
+                addQuestion(data[i+1][0], 'h2', 'red')
+                if (Object.keys(data[i+1][1]).length == 3) {
+                    var len = Object.keys(data[i+1][1][3]).length
+                } else {
+                    var len = Object.keys(data[i+1][1][1]).length
+                }
+                // console.log(Object.keys(data[i+1][1][3]).length)
+                for (var j = 0; j < len;j++) {
+                    // console.log(Object.keys(data[i+1][1]).length)
+                    id = (i+j).toString();
+                    if (Object.keys(data[i+1][1]).length == 3) {
+                        if (!!color) {
+                            addQuestion(data[i+1][1][3][j], 'h3', color)
+                        } else {
+                            addQuestion(data[i+1][1][3][j], 'h3')
+                        }
+                        for (var k = 0; k < Object.keys(data[i+1][1][1]).length; k++) {
+                            addQuestion(data[i+1][1][1][k], 'h4')
+                            addChoices(data[i+1][1][2],id.concat(title,k))
+                        }
+                    } else {
+                        addQuestion(data[i+1][1][1][j], 'h4')
+                        addChoices(data[i+1][1][2], id.concat(title))
+                    }    
+                }
+            }
+        }
+
+        function addQuestion(text, Optional, color) {
+            var question = document.createElement(Optional);
+            question.innerText = text; 
+            if (!!color) {
+                question.setAttribute('style', 'color: '.concat(color,';'));
+            }
+            document.getElementById('questionaire').appendChild(question);
+        }
+        function addChoices(scale, id) {
+            // var string = text
+            for (var i = 0; i < Object.keys(scale).length; i++) {
+                var question = document.createElement("input");
+                var text = document.createElement("label");
+                question.setAttribute('id', id);
+                question.setAttribute("type", "radio");
+                question.setAttribute("value", i + 1); 
+                question.setAttribute("name","Answer".concat(id));
+                text.innerText = scale[i+1];
+                document.getElementById('questionaire').appendChild(question);
+                document.getElementById('questionaire').appendChild(text);
+            }
+        }
+    }
+    </script>
+</body>
+</html>
