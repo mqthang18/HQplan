@@ -283,6 +283,7 @@
             for (var i = 0; i < Object.keys(scale).length; i++) {
                 var question = document.createElement("input");
                 var text = document.createElement("label");
+                var Downline = document.createElement("br");
                 question.setAttribute('id', id);
                 question.setAttribute("type", "radio");
                 question.setAttribute("value", i + 1); 
@@ -290,6 +291,7 @@
                 text.innerText = scale[i+1];
                 document.getElementById('questionaire').appendChild(question);
                 document.getElementById('questionaire').appendChild(text);
+                document.getElementById('questionaire').appendChild(Downline);
             }
         }
     }
